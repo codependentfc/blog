@@ -1,0 +1,16 @@
+doctype
+html
+	head
+	title Edit Post
+	//- link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+	header
+		h1 Edit Post - Test Locals: #{test}
+		form(action='edit', method='POST')
+			label Name:
+				input(type='text', name='author')
+			label Title:
+				input(type='text', name='title')
+			label Text:
+				input(type='text', name='text')
+			input(type='submit', name='Submit')
