@@ -25,7 +25,7 @@ describe("Main page (reading view)", function () {
        
         shot.inject(server, request, function (res) {
             // Placeholder test - looking for evidence of 'blog post' html
-            assert.equal(res.payload.match(/blog/), true);
+            assert.notEqual(res.payload.search(/blog/), -1);
             done();
         });
 
@@ -37,7 +37,7 @@ describe("Main page (reading view)", function () {
        
         shot.inject(server, request, function (res) {
             // Placeholder test - looking for evidence of 'blog post' html
-            assert.equal(res.payload.match(/blog/), true);
+            assert.notEqual(res.payload.search(/blog/), -1);
             done();
         });
 
@@ -70,7 +70,7 @@ describe('Edit Page', function(){
 
         shot.inject(server, request, function (res) {
             // Placeholder test looking for 'input' field
-            assert.equal(res.payload.match(/input/), true);
+            assert.notEqual(res.payload.search(/<input/), -1);
             done();
         });
 
