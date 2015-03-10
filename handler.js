@@ -1,5 +1,6 @@
 var url = require('url');
-
+var model = require("./model");
+var views = require('./views');
 // MIME type table
 var type = {
 	json : {'Content-Type': 'application/json'},
@@ -9,8 +10,14 @@ var type = {
 	text : {'Content-Type': 'text/plain'}
 };
 
-
-
+function respond(err, done) {
+	if (err) {
+		return {code: 404, write: err};
+	}
+	else {
+		return {code: 200, write: done};
+	}
+}
 
 module.exports = function handler(req, res) {
 
@@ -25,20 +32,19 @@ module.exports = function handler(req, res) {
 	}
 	else if (url === '/edit' && method === 'GET') {
 		res.writeHead(200, type.html);
-		res.end('<h1>edit</h1><input type=text></input>');
+		res.end(views.edit);
 	}
 	else if (url === '/edit' && method === 'POST') {
-		// blog post addition function here
-		if (null) { //ERROR --these responses in post creation funnction
-		res.writeHead(500, type.text);
-		res.end('Server Error - post not added');
-		}
-		else { //
-		res.writeHead(200, type.text);
-		res.end('Blog post added');
-		}
+		var body = '';
+		req.on('data', function(chunk){
+			body += chunk;
+		});
+		req.on('end', function(){
+			console.log(body);
+			var response = model.newPost(body, respond);
+			res.writeHead(response.code, type.text);
+			res.end(response.write);
+		});
 	}
-
-    
-
 };
+
