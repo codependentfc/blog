@@ -2,11 +2,17 @@ extend layout
 
 block content
 
-		h1 Lets Blog!
-		a(href='/edit') edit page
-
-
-		each post in posts
-			h3= post.title
-			p= post.text
-			p= post.author
+	.row
+		.col-sm-3.col-md-2
+			.navbar
+				ul This is a navbar
+				ul Is it really though?
+				ul Recent blog posts here!
+				ul Okay it needs fixing
+		.col-sm-9.col-sm-9.col-md-10.col-md-9
+			h1 Lets Blog!
+			a.btn.btn-info(href='/edit') Write/Edit post
+			each post in posts
+				.panel.panel-primary
+					.panel-heading #{post.title} | Written by: #{post.author}
+					.panel-body #{post.text}
