@@ -2,7 +2,11 @@ extend layout
 
 block content
 
-	h2= alert
+	#alert
+		if alert
+			.alert.alert-dismissable.alert-success
+				button.close( type="button", data-dismiss="alert" ) x
+				| #{alert}
 
 	h3 Edit Post
 	form(action='edit', method='POST')
@@ -14,4 +18,4 @@ block content
 			input(type='text', name='text' required)
 		input(type='submit', name='Submit')
 
-	a(href='/') Home
+	a.btn.btn-home(href='/') Home
