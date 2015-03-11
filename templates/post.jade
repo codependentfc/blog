@@ -1,0 +1,23 @@
+//- expects 'posts', 'postId'
+extend layout
+
+block content
+
+		.row
+		.col-sm-3.col-md-2
+			.navbar
+				h3
+					a(href='/') Home
+				br
+				ul
+				each post in posts
+					li
+						a(href='/#{post._id}') #{post.title}
+
+		- var selectedPost
+		- posts.forEach(function(elem){ if (elem['_id'].toString() === postId) {selectedPost = elem } }) 
+
+		.col-sm-9.col-md-10
+			.panel.panel-primary
+				.panel-heading #{selectedPost.title} | Written by: #{selectedPost.author}
+				.panel-body #{selectedPost.text}

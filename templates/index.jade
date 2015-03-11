@@ -1,3 +1,4 @@
+//- expects 'posts'
 extend layout
 
 block content
@@ -5,14 +6,29 @@ block content
 	.row
 		.col-sm-3.col-md-2
 			.navbar
-				ul This is a navbar
-				ul Is it really though?
-				ul Recent blog posts here!
-				ul Okay it needs fixing
-		.col-sm-9.col-sm-9.col-md-10.col-md-9
+				h3
+					a(href='/') Home
+				br
+				ul
+				each post in posts
+					li
+						a(href='/#{post._id}') #{post.title}
+
+		.col-sm-9.col-md-10
 			h1 Lets Blog!
 			a.btn.btn-info(href='/edit') Write/Edit post
-			each post in posts
-				.panel.panel-primary
-					.panel-heading #{post.title} | Written by: #{post.author}
-					.panel-body #{post.text}
+			br
+			
+			- var n = 0
+			if posts.length >= 5
+				while n < 5
+					.panel.panel-primary
+						.panel-heading #{posts[n].title} | Written by: #{posts[n].author}
+						.panel-body #{posts[n].text}
+					- n++
+			else 
+				each post in posts
+					.panel.panel-primary
+						.panel-heading #{post.title} | Written by: #{post.author}
+						.panel-body #{post.text}
+

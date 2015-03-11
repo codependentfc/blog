@@ -29,7 +29,7 @@ describe("Main page (reading view)", function () {
     it("should show excerpts of the 5 most recent blog posts", function (done) {
 
         shot.inject(server, request, function (res) {
-            assert.equal(res.payload.match(/blog/).length, 5);
+            assert.equal(res.payload.match(/panel-heading/).length, 5);
             done();
         });
     });     

@@ -28,19 +28,29 @@ module.exports = function handler(req, res) {
 	method = req.method;
 	
 	console.log('Request Received\n', 'url: '+url+'\n', 'method:'+method+'\n');
-
+	// index page
 	if (url === '/' && method === 'GET' ) {
 		model.fetchPosts(function(docs) {
 			res.writeHead(200, type.html);
 			res.end(views.index( {posts:docs} ));
 		});
 	}
-
+	// individual post
+	else if (/\/[0-9a-fA-F]{24}/.test(url) && method === 'GET' ) {
+		
+		var requestedPost = url.replace(/\//, '');
+		console.log('Post Requested. Id: \n', requestedPost);
+		model.fetchPosts(function(docs) {
+			res.writeHead(200, type.html);
+			res.end(views.post( {posts: docs, postId: requestedPost } ));
+		});
+	}
+	// edit page
 	else if (url === '/edit' && method === 'GET') {
 		res.writeHead(200, type.html);
 		res.end(views.edit());
 	}
-
+	// submit new post
 	else if (url === '/edit' && method === 'POST') {
 		var body = '';
 		req.on('data', function(chunk){
@@ -53,6 +63,7 @@ module.exports = function handler(req, res) {
 			res.end( views.edit( { alert: response.write } ) );
 		});
 	}
+
 	///////////////////
 	// STATIC ROUTES //
 	///////////////////

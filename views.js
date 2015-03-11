@@ -4,7 +4,8 @@ var model = require('./model');
 
 var files = {
 	edit : path.join(__dirname,'/templates/edit.jade'),
-	index: path.join(__dirname,'/templates/index.jade')
+	index: path.join(__dirname,'/templates/index.jade'),
+	post: path.join(__dirname,'/templates/post.jade')
 };
 
 var indexPosts;
@@ -18,6 +19,9 @@ module.exports = {
 			},
 	index : function(locals) {
 				return jade.renderFile(files.index, locals);
+			},
+	post: function(locals) {
+				return jade.renderFile(files.post, locals);
 			}
 };
 
