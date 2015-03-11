@@ -53,7 +53,9 @@ module.exports = function handler(req, res) {
 			res.end( views.edit( { alert: response.write } ) );
 		});
 	}
-
+	///////////////////
+	// STATIC ROUTES //
+	///////////////////
 	// TODO - refactor static routes into a function. regex for file ext, then regex to lookup on an object of file paths?
 	else if (url === '/style.css' && method === 'GET') {
 		fs.readFile(path.join(__dirname, '/public/css/style.css'), function(err, data){

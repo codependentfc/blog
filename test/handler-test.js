@@ -11,38 +11,28 @@ describe("Main page (reading view)", function () {
     };
     it("should respond with an OK status code", function (done) {
 
-       
-
         shot.inject(server, request, function (res) {
             assert.equal(res.statusCode, 200);
             done();
         });
-
     });
     
     it("should show a list of blog entry titles", function (done) {
 
-       
         shot.inject(server, request, function (res) {
-            // Placeholder test - looking for evidence of 'blog post' html
-            assert.notEqual(res.payload.search(/blog/), -1);
+            assert.notEqual(res.payload.search(/entries/), -1);
             done();
         });
-
     });
     
     
-    it("should show excerpts of the most recent blog posts", function (done) {
+    it("should show excerpts of the 5 most recent blog posts", function (done) {
 
-       
         shot.inject(server, request, function (res) {
-            // Placeholder test - looking for evidence of 'blog post' html
-            assert.notEqual(res.payload.search(/blog/), -1);
+            assert.equal(res.payload.match(/blog/).length, 5);
             done();
         });
-
-    });
-        
+    });     
 });
 
 describe('Edit Page', function(){
@@ -69,7 +59,7 @@ describe('Edit Page', function(){
         };
 
         shot.inject(server, request, function (res) {
-            // Placeholder test looking for 'input' field
+            // test looking for at least one'input' field
             assert.notEqual(res.payload.search(/<input/), -1);
             done();
         });
@@ -92,9 +82,11 @@ describe('Edit Page', function(){
     
     it("should add new blog post", function (done) {
 
+        // NB this payload property works - server correctly interprets input
         request = {
             method: "POST",
-            url: "/edit"
+            url: "/edit",
+            payload: "author=test&title=test&text=test&Submit=Submit"
         };
 
         shot.inject(server, request, function (res) {
