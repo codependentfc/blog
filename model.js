@@ -22,13 +22,6 @@ var blogSchema = mongoose.Schema({
 	date   : Object
 });
 
-// Adding method to the schema. Have to be defined before schema is compiled
-//  e.g.
-// blogSchema.methods.announce = function() {
-// 	var author = this.author ? "Another blog post by " + this.author : "Anonymous blog post";
-// 	console.log(author);
-// };
-
 // Compile schema into a model, which defines the database collection
 // arg1: collection name, arg2: schema name
 var blogpost = mongoose.model("blogpost", blogSchema);
@@ -47,7 +40,7 @@ exports.newPost = function(POSTbody, callback) {
 	});
 
 	// HOW CAN I SUCCESSFULLY RETURN THE RESULT OF THE SAVE ASYNC METHOD TO THE CALLBACK??
-	// i think currently the if statement will be executed without waiting for the save method affect the error var
+	// I think currently the if statement will be executed without waiting for the save method affect the error var
 	var error;
 	newPost.save(function(err){
 		if (err) { error = err;}
@@ -63,6 +56,8 @@ exports.newPost = function(POSTbody, callback) {
 
 };
 
+// fetching all docs is a placeholder behaviour
+// TODO refactor to take a second parameter (e.g. 'page') and only bring back 10(?) results at a time
 exports.fetchPosts = function(callback) {
 	blogpost.find({}, function(err, docs){
 		console.log("fetchPosts: \n",docs);

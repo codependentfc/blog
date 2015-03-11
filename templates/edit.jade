@@ -1,22 +1,35 @@
-//- looks for 'alert'
+//- looks for 'alert'  TODO: add optional 'statusCode' local to handler
 extend layout
 
 block content
 
-	#alert
-		if alert
-			.alert.alert-dismissable.alert-success
-				button.close( type="button", data-dismiss="alert" ) x
-				| #{alert}
+		.row
+		.col-sm-3.col-md-2
+			.navbar
+				h3
+					a(href='/') Home
+				br
+				ul
+				each post in posts
+					li
+						a(href='/#{post._id}') #{post.title}
 
-	h3 Edit Post
-	form(action='edit', method='POST')
-		label Name:
-			input(type='text', name='author' required)
-		label Title:
-			input(type='text', name='title' required)
-		label Text:
-			input(type='text', name='text' required)
-		input(type='submit', name='Submit')
-
-	a.btn.btn-info(href='/') Home
+		.col-sm-9.col-md-10
+			//- TODO change alert colour depending on statusCode
+			#alert
+				if alert
+					.alert.alert-dismissable.alert-success
+						button.close( type="button", data-dismiss="alert" ) x
+						| #{alert}
+			
+			//- TODO change 'compose' if editing
+			h3 Compose Post 
+			br
+			form(action='edit', method='POST')
+				label Name:
+					input(type='text', name='author' required)
+				label Title:
+					input(type='text', name='title' required)
+				label Text:
+					input(type='text', name='text' required)
+				input(type='submit', name='Submit')

@@ -47,8 +47,10 @@ module.exports = function handler(req, res) {
 	}
 	// edit page
 	else if (url === '/edit' && method === 'GET') {
-		res.writeHead(200, type.html);
-		res.end(views.edit());
+		model.fetchPosts(function(docs) {
+			res.writeHead(200, type.html);
+			res.end(views.edit( {posts:docs} ));
+		});
 	}
 	// submit new post
 	else if (url === '/edit' && method === 'POST') {
