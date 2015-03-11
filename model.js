@@ -5,6 +5,7 @@ var qs = require('querystring');
 var creds = require('./creds.json');
 
 mongoose.connect("mongodb://"+creds.dbname+":"+creds.dbpwd+"@ds037611.mongolab.com:37611/facblog");
+// mongoose.connect("mongodb://127.0.0.1:27017/newdatabase");
 
 // Get notification for connection success or failure
 var db = mongoose.connection;

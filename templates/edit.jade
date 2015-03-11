@@ -1,11 +1,7 @@
-doctype
-html
-	head
-	title Edit Post
-	//- link(rel='stylesheet', href='/stylesheets/style.css')
-	body
-	header
-		h1 Edit Post - Test Locals: #{test}
+extend layout
+
+block content
+		h3 Edit Post - Test Locals: #{test}
 		form(action='edit', method='POST')
 			label Name:
 				input(type='text', name='author')
@@ -14,3 +10,4 @@ html
 			label Text:
 				input(type='text', name='text')
 			input(type='submit', name='Submit')
+		p css? we need some... and why does it not work?!
