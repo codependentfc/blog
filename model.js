@@ -45,17 +45,27 @@ exports.newPost = function(POSTbody, callback) {
 		date   : Date()
 	});
 
-	// use error variable to get error message out of save function scope
+	// var error to get error message out of save function scope
+	//  var saveDone to check async save finished NO!!!!!
 	var error;
+	// var saveDone;
 	newPost.save(function(err){
 		if (err) { error = err;}
+		saveDone = true;
 	});
+	// if (saveDone) {
+		if (error) {
+			return callback(error, null);
+		}
+		else {
+			return callback(null, 'New post added');
+		}
+	// }
+};
 
-	if (error) {
-		return callback(error, null);
-	}
-	else {
-		return callback(null, 'New post added');
-	}
-
+exports.fetchPosts = function(callback) {
+	blogpost.find({}, function(err, docs){
+		console.log("fetchPosts: \n",docs);
+		return callback(docs);
+	});
 };

@@ -28,7 +28,7 @@ module.exports = function handler(req, res) {
 
 	if (url === '/' && method === 'GET' ) {
 		res.writeHead(200, type.html);
-		res.end('<h1>blog</h1>');
+		res.end(views.index);
 	}
 	else if (url === '/edit' && method === 'GET') {
 		res.writeHead(200, type.html);
@@ -40,7 +40,7 @@ module.exports = function handler(req, res) {
 			body += chunk;
 		});
 		req.on('end', function(){
-			console.log(body);
+			console.log('POST body:\n',body);
 			var response = model.newPost(body, respond);
 			res.writeHead(response.code, type.text);
 			res.end(response.write);
