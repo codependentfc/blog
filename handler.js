@@ -35,10 +35,12 @@ module.exports = function handler(req, res) {
 			res.end(views.index( {posts:docs} ));
 		});
 	}
+
 	else if (url === '/edit' && method === 'GET') {
 		res.writeHead(200, type.html);
 		res.end(views.edit());
 	}
+
 	else if (url === '/edit' && method === 'POST') {
 		var body = '';
 		req.on('data', function(chunk){
@@ -51,8 +53,10 @@ module.exports = function handler(req, res) {
 			res.end( views.edit( { alert: response.write } ) );
 		});
 	}
-	else if ((url.search(/.css/ !== -1) && method === 'GET')) {
-		fs.readFile(path.join(__dirname, '/style.css'), function(err, data){
+
+	// TODO - refactor static routes into a function. regex for file ext, then regex to lookup on an object of file paths?
+	else if (url === '/style.css' && method === 'GET') {
+		fs.readFile(path.join(__dirname, '/public/css/style.css'), function(err, data){
 			if (err) {
 				res.writeHead(404, type.text);
 				res.end(err);
@@ -63,8 +67,43 @@ module.exports = function handler(req, res) {
 			}
 		});
 	}
+
+	else if ( url === '/bootstrap.min.css' && method === 'GET') {
+		fs.readFile(path.join(__dirname, '/public/css/bootstrap.min.css'), function(err, data){
+			if (err) {
+				res.writeHead(404, type.text);
+				res.end(err);
+			}
+			else {
+				res.writeHead(200, type.css);
+				res.end(data);
+			}
+		});
+	}
+
+	else if (url === '/bootstrap.min.js' && method === 'GET') {
+		fs.readFile(path.join(__dirname, '/public/scripts/bootstrap.min.js'), function(err, data){
+			if (err) {
+				res.writeHead(404, type.text);
+				res.end(err);
+			}
+			else {
+				res.writeHead(200, type.js);
+				res.end(data);
+			}
+		});
+	}
+
+	else if (url === '/jquery-2.1.3.min.js' && method === 'GET') {
+		fs.readFile(path.join(__dirname, '/public/scripts/jquery-2.1.3.min.js'), function(err, data){
+			if (err) {
+				res.writeHead(404, type.text);
+				res.end(err);
+			}
+			else {
+				res.writeHead(200, type.js);
+				res.end(data);
+			}
+		});
+	}
 };
-
-
-	
-
