@@ -46,22 +46,21 @@ exports.newPost = function(POSTbody, callback) {
 		date   : Date()
 	});
 
-	// var error to get error message out of save function scope
-	//  var saveDone to check async save finished NO!!!!!
+	// HOW CAN I SUCCESSFULLY RETURN THE RESULT OF THE SAVE ASYNC METHOD TO THE CALLBACK??
+	// i think currently the if statement will be executed without waiting for the save method affect the error var
 	var error;
-	// var saveDone;
 	newPost.save(function(err){
 		if (err) { error = err;}
-		// saveDone = true;
+		
 	});
-	// if (saveDone) {
-		if (error) {
-			return callback(error, null);
-		}
-		else {
-			return callback(null, 'New post added');
-		}
-	// }
+	
+	if (error) {
+		return callback(error, null);
+	}
+	else {
+		return callback(null, 'New post added');
+	}
+
 };
 
 exports.fetchPosts = function(callback) {

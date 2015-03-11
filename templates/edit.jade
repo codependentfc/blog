@@ -4,10 +4,9 @@ block content
 		h3 Edit Post - Test Locals: #{test}
 		form(action='edit', method='POST')
 			label Name:
-				input(type='text', name='author')
+				input(type='text', name='author' required)
 			label Title:
-				input(type='text', name='title')
+				input(type='text', name='title' required)
 			label Text:
-				input(type='text', name='text')
+				input(type='text', name='text' required)
 			input(type='submit', name='Submit')
-		p css? we need some... and why does it not work?!

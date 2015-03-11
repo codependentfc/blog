@@ -1,6 +1,9 @@
 var url = require('url');
 var model = require("./model");
 var views = require('./views');
+var fs = require('fs');
+var path = require('path');
+
 // MIME type table
 var type = {
 	json : {'Content-Type': 'application/json'},
@@ -27,8 +30,10 @@ module.exports = function handler(req, res) {
 	console.log('Request Received\n', 'url: '+url+'\n', 'method:'+method+'\n');
 
 	if (url === '/' && method === 'GET' ) {
-		res.writeHead(200, type.html);
-		res.end(views.index);
+		model.fetchPosts(function(docs) {
+			res.writeHead(200, type.html);
+			res.end(views.index( {posts:docs} ));
+		});
 	}
 	else if (url === '/edit' && method === 'GET') {
 		res.writeHead(200, type.html);
@@ -46,5 +51,20 @@ module.exports = function handler(req, res) {
 			res.end(response.write);
 		});
 	}
+	else if ((url.search(/.css/ !== -1) && method === 'GET')) {
+		fs.readFile(path.join(__dirname, '/style.css'), function(err, data){
+			if (err) {
+				res.writeHead(404, type.text);
+				res.end(err);
+			}
+			else {
+				res.writeHead(200, type.css);
+				res.end(data);
+			}
+		});
+	}
 };
+
+
+	
 
