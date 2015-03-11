@@ -1,12 +1,17 @@
 extend layout
 
 block content
-		h3 Edit Post - Test Locals: #{test}
-		form(action='edit', method='POST')
-			label Name:
-				input(type='text', name='author' required)
-			label Title:
-				input(type='text', name='title' required)
-			label Text:
-				input(type='text', name='text' required)
-			input(type='submit', name='Submit')
+
+	h2= alert
+
+	h3 Edit Post
+	form(action='edit', method='POST')
+		label Name:
+			input(type='text', name='author' required)
+		label Title:
+			input(type='text', name='title' required)
+		label Text:
+			input(type='text', name='text' required)
+		input(type='submit', name='Submit')
+
+	a(href='/') Home

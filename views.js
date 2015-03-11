@@ -13,7 +13,9 @@ function assign(input, variable) {
 }
 
 module.exports = {
-	edit : jade.renderFile(files.edit, {test: 'OH HAI THERE'}),
+	edit : function(locals) {
+				return jade.renderFile(files.edit, locals);
+			},
 	index : function(locals) {
 				return jade.renderFile(files.index, locals);
 			}

@@ -37,7 +37,7 @@ module.exports = function handler(req, res) {
 	}
 	else if (url === '/edit' && method === 'GET') {
 		res.writeHead(200, type.html);
-		res.end(views.edit);
+		res.end(views.edit());
 	}
 	else if (url === '/edit' && method === 'POST') {
 		var body = '';
@@ -47,8 +47,8 @@ module.exports = function handler(req, res) {
 		req.on('end', function(){
 			console.log('POST body:\n',body);
 			var response = model.newPost(body, respond);
-			res.writeHead(response.code, type.text);
-			res.end(response.write);
+			res.writeHead(response.code, type.html);
+			res.end( views.edit( { alert: response.write } ) );
 		});
 	}
 	else if ((url.search(/.css/ !== -1) && method === 'GET')) {
