@@ -97,7 +97,7 @@ module.exports = function handler(req, res) {
 	}
 
 	else if (url === '/bootstrap.min.js' && method === 'GET') {
-		fs.readFile(path.join(__dirname, '/public/scripts/bootstrap.min.js'), function(err, data){
+		fs.readFile(path.join(__dirname, '/public/lib/bootstrap.min.js'), function(err, data){
 			if (err) {
 				res.writeHead(404, type.text);
 				res.end(err);
@@ -110,7 +110,7 @@ module.exports = function handler(req, res) {
 	}
 
 	else if (url === '/jquery-2.1.3.min.js' && method === 'GET') {
-		fs.readFile(path.join(__dirname, '/public/scripts/jquery-2.1.3.min.js'), function(err, data){
+		fs.readFile(path.join(__dirname, '/public/lib/jquery-2.1.3.min.js'), function(err, data){
 			if (err) {
 				res.writeHead(404, type.text);
 				res.end(err);
