@@ -4,7 +4,7 @@ block content
 
 	.row
 		.col-sm-3.col-md-2
-			.sidebar-nav
+			.navbar
 				ul This is a navbar
 				ul Is it really though?
 				ul Recent blog posts here!
@@ -12,10 +12,7 @@ block content
 		.col-sm-9.col-sm-9.col-md-10.col-md-9
 			h1 Lets Blog!
 			a.btn.btn-info(href='/edit') Write/Edit post
-
-
 			each post in posts
 				.panel.panel-primary
-					.panel-heading #{post.title}
-					.panel-body #{post.text} 
-				p Written by: #{post.author}
+					.panel-heading #{post.title} | Written by: #{post.author}
+					.panel-body #{post.text}
