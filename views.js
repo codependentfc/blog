@@ -15,6 +15,7 @@ function assign(input, variable) {
 module.exports = {
 	edit : jade.renderFile(files.edit, {test: 'OH HAI THERE'}),
 	index : jade.renderFile(files.index, {posts: model.fetchPosts(function(docs) {console.log('template fetch:\n',docs); return docs;}),
-											testArray: ['one', 'two', 'three']	})
+											testArray: ['one', 'two', 'three'],	
+											testString: 'HARRO!'})
 };
 

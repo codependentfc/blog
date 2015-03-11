@@ -52,7 +52,7 @@ exports.newPost = function(POSTbody, callback) {
 	// var saveDone;
 	newPost.save(function(err){
 		if (err) { error = err;}
-		saveDone = true;
+		// saveDone = true;
 	});
 	// if (saveDone) {
 		if (error) {
