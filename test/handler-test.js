@@ -25,7 +25,7 @@ describe("Main page (reading view)", function () {
         });
     });
     
-    
+    //TODO currently depends on db size being >= 5. also, not most recent
     it("should show excerpts of the 5 most recent blog posts", function (done) {
 
         shot.inject(server, request, function (res) {
