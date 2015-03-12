@@ -24,11 +24,24 @@ block content
 		//- TODO change 'compose' if editing
 		h3 Compose Post 
 		br
-		form(action='edit', method='POST')
-			label Name:
-				input(type='text', name='author' required)
-			label Title:
-				input(type='text', name='title' required)
-			label Text:
-				textarea(rows='10' cols='50' name='text' required)
-			input(type='submit', name='Submit')
+
+		if postId
+			h3 Edit Post
+			form(action='edit', method='POST')
+				label Name:
+					input(type='text', name='author' required)
+				label Title:
+					input(type='text', name='title' required)
+				label Text:
+					textarea(rows='10' cols='50' name='text' required)
+				input(type='submit', name='Edit Post')
+		else
+			h3 Compose Post
+			form(action='edit', method='POST')
+				label Name:
+					input(type='text', name='author' required)
+				label Title:
+					input(type='text', name='title' required)
+				label Text:
+					textarea(rows='10' cols='50' name='text' required)
+				input(type='submit', name='Submit Post')

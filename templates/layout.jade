@@ -2,27 +2,33 @@ doctype html
 html
 	head
 		title Blogger
-		
+
 		link(rel='stylesheet', href='/bootstrap.min.css')
 		link(rel='stylesheet', href='/style.css')
 		
 		script(src='/jquery-2.1.3.min.js')
 		script(src='/bootstrap.min.js')
 
-		body
-			.container
-				.row
-					header
-					.col-sm-3.col-md-2
-						.navbar
-							h3
-								a(href='/') Home
-							br
-							ul
-							each post in posts
-								li
-									a(href='/#{post._id}') #{post.title}
-					block content
+	body
+		.container
+			.row
+				//- header -theres no header here! 
+				.col-sm-3.col-md-2
+					.navbar
+						h3
+							a(href='/') Home
+						br
+						ul
+						each post in posts
+							li
+								if (view === 'edit')
+									a(href='/edit/#{post._id}') #{post.title} 
+									a(href='/#{post._id}?method="DELETE"') &times;
+								else
+									a(href='/#{post._id}?method="GET"') #{post.title}
+
+				block content
+
 		footer
 			.container
 				p.text-muted Created by:

@@ -56,7 +56,7 @@ module.exports = function handler(req, res) {
 	else if (url === '/edit' && method === 'GET') {
 		model.fetchPosts(function(docs) {
 			res.writeHead(200, type.html);
-			res.end(views.edit( {posts: docs} ));
+			res.end(views.edit( {view: 'edit', posts: docs} ));
 		});
 	}
 	// submit new post
@@ -71,7 +71,7 @@ module.exports = function handler(req, res) {
 				var response = respond(err, data);
 				model.fetchPosts(function(docs) {
 					res.writeHead( response.code, type.html);
-					res.end(views.edit( {posts: docs, alert: response.write, statusCode: response.code} ));
+					res.end(views.edit( {view: 'edit', posts: docs, alert: response.write, statusCode: response.code} ));
 				});
 			});
 		});
