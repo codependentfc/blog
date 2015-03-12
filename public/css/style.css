@@ -1,3 +1,17 @@
 h1 {
 	color: red;
 }
+
+/*Footer adjusting*/
+.row {
+  overflow:auto;
+  padding-bottom:150px;
+}
+
+footer {
+  position: relative;
+  margin-top: -50px;
+  height: 150px;
+  clear:both;
+  padding-top:20px;
+} 

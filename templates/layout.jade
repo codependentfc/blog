@@ -11,8 +11,18 @@ html
 
 		body
 			.container
-				.main-content
+				.row
+					.col-sm-3.col-md-2
+						.navbar
+							h3
+								a(href='/') Home
+							br
+							ul
+							each post in posts
+								li
+									a(href='/#{post._id}') #{post.title}
 					block content
 		footer
 			.container
-				p.text-muted The footer goes here...
+				p.text-muted Created by: Team 
+					a.text-muted(href='http://codependentfc.github.io/') Codependant
