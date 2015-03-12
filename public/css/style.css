@@ -2,6 +2,10 @@ h1 {
 	color: red;
 }
 
+.btn-info {
+	margin-left: 10px ;
+}
+
 /*Footer adjusting*/
 .row {
   overflow:auto;
