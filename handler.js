@@ -1,4 +1,4 @@
-var url = require('url');
+
 var model = require("./model");
 var views = require('./views');
 var fs = require('fs');
@@ -11,6 +11,13 @@ var type = {
 	css : {'Content-Type': 'text/css'},
 	html : {'Content-Type': 'text/html'},
 	text : {'Content-Type': 'text/plain'}
+};
+//  resource paths
+var files = {
+	'/style.css': path.join(__dirname, '/public/css/style.css'),
+	'/bootstrap.min.css': path.join(__dirname, '/public/css/bootstrap.min.css'),
+	'/bootstrap.min.js': path.join(__dirname, '/public/lib/bootstrap.min.js'),
+	'/jquery-2.1.3.min.js' : path.join(__dirname, '/public/lib/jquery-2.1.3.min.js'),
 };
 
 function respond(err, data) {
@@ -67,61 +74,26 @@ module.exports = function handler(req, res) {
 					res.end(views.edit( {posts: docs, alert: response.write, statusCode: response.code} ));
 				});
 			});
-			
 		});
 	}
 
-	///////////////////
-	// STATIC ROUTES //
-	///////////////////
-	// TODO - refactor static routes into a function. regex for file ext, then regex to lookup on an object of file paths?
-	else if (url === '/style.css' && method === 'GET') {
-		fs.readFile(path.join(__dirname, '/public/css/style.css'), function(err, data){
+	else if (/\/[0-9a-fA-F]{24}/.test(url) && method === 'PUT') {
+
+	}
+
+	else if (/\/[0-9a-fA-F]{24}/.test(url) && method === 'DELETE') {
+		
+	}
+
+	else if ( /.css|.js/.test(url) ){
+		var ext = /(css|js)\b/.exec(url)[0];
+		fs.readFile(files[url], function(err, data){
 			if (err) {
 				res.writeHead(404, type.text);
 				res.end(err);
 			}
 			else {
-				res.writeHead(200, type.css);
-				res.end(data);
-			}
-		});
-	}
-
-	else if ( url === '/bootstrap.min.css' && method === 'GET') {
-		fs.readFile(path.join(__dirname, '/public/css/bootstrap.min.css'), function(err, data){
-			if (err) {
-				res.writeHead(404, type.text);
-				res.end(err);
-			}
-			else {
-				res.writeHead(200, type.css);
-				res.end(data);
-			}
-		});
-	}
-
-	else if (url === '/bootstrap.min.js' && method === 'GET') {
-		fs.readFile(path.join(__dirname, '/public/lib/bootstrap.min.js'), function(err, data){
-			if (err) {
-				res.writeHead(404, type.text);
-				res.end(err);
-			}
-			else {
-				res.writeHead(200, type.js);
-				res.end(data);
-			}
-		});
-	}
-
-	else if (url === '/jquery-2.1.3.min.js' && method === 'GET') {
-		fs.readFile(path.join(__dirname, '/public/lib/jquery-2.1.3.min.js'), function(err, data){
-			if (err) {
-				res.writeHead(404, type.text);
-				res.end(err);
-			}
-			else {
-				res.writeHead(200, type.js);
+				res.writeHead(200, type[ext]);
 				res.end(data);
 			}
 		});

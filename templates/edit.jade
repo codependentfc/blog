@@ -7,11 +7,20 @@ block content
 	.col-sm-9.col-md-10
 		//- TODO change alert colour depending on statusCode
 		#alert
+			- var alertType;
+			- if (statusCode === 200) {
+			-	alertType = 'alert-success';
+			-	}
+			- else {
+			-	alertType = 'alert-danger'
+			-	} 
+
 			if alert
-				.alert.alert-dismissable.alert-success
-					button.close( type="button", data-dismiss="alert" ) x
+				div(class="alert alert-dismissable #{alertType}")
+					button.close( type="button", data-dismiss="alert" ) &times;
 					| #{alert}
-		
+
+
 		//- TODO change 'compose' if editing
 		h3 Compose Post 
 		br
@@ -21,5 +30,5 @@ block content
 			label Title:
 				input(type='text', name='title' required)
 			label Text:
-				input(type='text', name='text' required)
+				textarea(rows='10' cols='50' name='text' required)
 			input(type='submit', name='Submit')

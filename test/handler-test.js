@@ -50,7 +50,6 @@ describe('Edit Page', function(){
             assert.equal(res.statusCode, 200);
             done();
         });
-
     }); 
     
     it("should show a text editor for writing your blog post", function (done) {
@@ -65,7 +64,6 @@ describe('Edit Page', function(){
             assert.notEqual(res.payload.search(/<input/), -1);
             done();
         });
-
     }); 
     
     it("should select a post from list in edit page for editing", function (done) {
@@ -79,7 +77,6 @@ describe('Edit Page', function(){
             assert.equal(res.payload, "");
             done();
         });
-
     });
     
     it("should add new blog post", function (done) {
@@ -97,24 +94,9 @@ describe('Edit Page', function(){
             model.delTestPosts();
             done();
         });
-
-
     });
-    
-    it("should delete selected blog post", function (done) {
-        request = {
-            method: "DELETE",
-            url: "/edit/<blog_post_id_number>"
-        };
 
-        shot.inject(server, request, function (res) {
-            assert.equal(res.payload, "");
-            done();
-        });
 
-    });
-    
- 
     it("should update selected blog post", function (done) {
 
         request = {
@@ -126,9 +108,19 @@ describe('Edit Page', function(){
             assert.equal(res.payload, "");
             done();
         });
-
     });
-
+    
+    it("should delete selected blog post", function (done) {
+        request = {
+            method: "DELETE",
+            url: "/edit/<blog_post_id_number>"
+        };
+        // duh. use this test to clean db...
+        shot.inject(server, request, function (res) {
+            assert.equal(res.payload, "");
+            done();
+        });
+    });
 });
 
 describe('Individual Post Page', function(){
@@ -144,9 +136,7 @@ describe('Individual Post Page', function(){
             assert.equal(res.payload, "");
             done();
         });
-
-    });
-    
+    }); 
 });
 
 

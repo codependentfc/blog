@@ -11,7 +11,7 @@ header {
 	margin-left: 20px;
 }
 
-.col-sm-9.col-md-10 {
+.col-sm-9 .col-md-10 {
 	background-color: white;
 	padding-top: 20px;
 }
@@ -34,3 +34,16 @@ footer {
 	clear:both;
 	padding-top:20px;
 } 
+
+label {
+	display: block;
+}
+
+
+input {
+	display: block;
+}
+
+textarea {
+	display: block;
+}
