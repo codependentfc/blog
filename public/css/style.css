@@ -1,3 +1,36 @@
 h1 {
 	color: red;
+	margin-left: 20px;
 }
+
+body {
+	background-color: white;
+}
+
+header {
+	margin-left: 20px;
+}
+
+.col-sm-9.col-md-10 {
+	background-color: white;
+	padding-top: 20px;
+}
+
+.btn-info {
+	margin-left: 10px ;
+}
+
+/*Footer adjusting*/
+.row {
+	overflow:auto;
+	padding-bottom:150px;
+	padding-top: 50px;
+}
+
+footer {
+	position: relative;
+	margin-top: -50px;
+	height: 150px;
+	clear:both;
+	padding-top:20px;
+} 
