@@ -13,12 +13,12 @@ var type = {
 	text : {'Content-Type': 'text/plain'}
 };
 
-function respond(err, done) {
+function respond(err, data) {
 	if (err) {
 		return {code: 404, write: err};
 	}
 	else {
-		return {code: 200, write: done};
+		return {code: 200, write: data};
 	}
 }
 
@@ -32,7 +32,7 @@ module.exports = function handler(req, res) {
 	if (url === '/' && method === 'GET' ) {
 		model.fetchPosts(function(docs) {
 			res.writeHead(200, type.html);
-			res.end(views.index( {posts:docs} ));
+			res.end(views.index( {posts: docs} ));
 		});
 	}
 	// individual post
@@ -49,7 +49,7 @@ module.exports = function handler(req, res) {
 	else if (url === '/edit' && method === 'GET') {
 		model.fetchPosts(function(docs) {
 			res.writeHead(200, type.html);
-			res.end(views.edit( {posts:docs} ));
+			res.end(views.edit( {posts: docs} ));
 		});
 	}
 	// submit new post
@@ -60,9 +60,14 @@ module.exports = function handler(req, res) {
 		});
 		req.on('end', function(){
 			console.log('POST body:\n',body);
-			var response = model.newPost(body, respond);
-			res.writeHead(response.code, type.html);
-			res.end( views.edit( { alert: response.write } ) );
+			model.newPost(body, function(err, data){
+				var response = respond(err, data);
+				model.fetchPosts(function(docs) {
+					res.writeHead( response.code, type.html);
+					res.end(views.edit( {posts: docs, alert: response.write, statusCode: response.code} ));
+				});
+			});
+			
 		});
 	}
 

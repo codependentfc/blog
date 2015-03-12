@@ -1,6 +1,7 @@
 var shot = require("shot");
 var server = require("../handler");
 var assert = require("assert");
+var model = require('../model');
 var request;
 
 describe("Main page (reading view)", function () {
@@ -20,6 +21,7 @@ describe("Main page (reading view)", function () {
     it("should show a list of blog entry titles", function (done) {
 
         shot.inject(server, request, function (res) {
+            console.log(res.payload);
             assert.notEqual(res.payload.search(/entries/), -1);
             done();
         });
@@ -82,17 +84,20 @@ describe('Edit Page', function(){
     
     it("should add new blog post", function (done) {
 
-        // NB this payload property works - server correctly interprets input
         request = {
             method: "POST",
             url: "/edit",
+            header: {'Content-Type' : 'application/x-www-form-urlencoded'},
             payload: "author=test&title=test&text=test&Submit=Submit"
         };
 
         shot.inject(server, request, function (res) {
-            assert.equal(res.payload, "");
+            assert.notEqual(res.payload.search('New post added'), -1);
+            // Clean up db
+            model.delTestPosts();
             done();
         });
+
 
     });
     
@@ -143,3 +148,5 @@ describe('Individual Post Page', function(){
     });
     
 });
+
+

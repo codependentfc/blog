@@ -27,40 +27,46 @@ var blogSchema = mongoose.Schema({
 var blogpost = mongoose.model("blogpost", blogSchema);
 
 // Pass this function the POST request object
-exports.newPost = function(POSTbody, callback) {
+function newPost(POSTbody, callback) {
 	// parse request -should return an object with properties matching form field names
 	postedData = qs.parse(POSTbody);
 	console.log(postedData);
 	// construct new post from from data
-	var newPost = new blogpost({
+	var thisPost = new blogpost({
 		author : postedData.author,
 		title  : postedData.title,
 		text   : postedData.text,
 		date   : Date()
 	});
 
-	// HOW CAN I SUCCESSFULLY RETURN THE RESULT OF THE SAVE ASYNC METHOD TO THE CALLBACK??
-	// I think currently the if statement will be executed without waiting for the save method affect the error var
-	var error;
-	newPost.save(function(err){
-		if (err) { error = err;}
-		
+	thisPost.save(function(err){
+		if (err) {
+			return callback(err, null);
+		}
+		else {
+			return callback(null, 'New post added');
+		}
 	});
-	
-	if (error) {
-		return callback(error, null);
-	}
-	else {
-		return callback(null, 'New post added');
-	}
-
-};
+}
 
 // fetching all docs is a placeholder behaviour
 // TODO refactor to take a second parameter (e.g. 'page') and only bring back 10(?) results at a time
-exports.fetchPosts = function(callback) {
+function fetchPosts(callback) {
 	blogpost.find({}, function(err, docs){
 		console.log("fetchPosts: \n",docs);
 		return callback(docs);
 	});
+}
+
+function delTestPosts() {
+	blogpost.remove({title: 'test'}, function(err){
+		if (err) {console.error(err);}
+		else {console.log('Test posts deleted');}
+	});
+}
+
+module.exports = {
+	newPost : newPost,
+	fetchPosts: fetchPosts,
+	delTestPosts: delTestPosts
 };
