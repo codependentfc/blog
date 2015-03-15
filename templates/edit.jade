@@ -1,16 +1,19 @@
-//- looks for 'alert'  TODO: add optional 'statusCode' local to handler
+//- looks for 'alert'  
+//- looks for postId, postTitle, postAuthor, postText
 extend layout
 
 block content
 
 
 	.col-sm-9.col-md-10
-		//- TODO change alert colour depending on statusCode
 		#alert
 			- var alertType;
 			- if (statusCode === 200) {
 			-	alertType = 'alert-success';
 			-	}
+			- else if (statusCode === 304) {
+			-	alertType = 'alert-warning'
+			- }
 			- else {
 			-	alertType = 'alert-danger'
 			-	} 
@@ -20,23 +23,20 @@ block content
 					button.close( type="button", data-dismiss="alert" ) &times;
 					| #{alert}
 
-
-		//- TODO change 'compose' if editing
-		h3 Compose Post 
-		br
-
 		if postId
 			h3 Edit Post
-			form(action='edit', method='POST')
+			br
+			form(action='edit/#{postId}?method=PUT', method='POST')
 				label Name:
-					input(type='text', name='author' required)
+					input(type='text', name='author' value='#{postAuthor}' required)
 				label Title:
-					input(type='text', name='title' required)
+					input(type='text', name='title' value='#{postTitle}' required)
 				label Text:
-					textarea(rows='10' cols='50' name='text' required)
-				input(type='submit', name='Edit Post')
+					textarea(rows='10' cols='50' name='text' required) #{postText} 
+				input(type='submit', value='Edit Post')
 		else
 			h3 Compose Post
+			br
 			form(action='edit', method='POST')
 				label Name:
 					input(type='text', name='author' required)
@@ -44,4 +44,4 @@ block content
 					input(type='text', name='title' required)
 				label Text:
 					textarea(rows='10' cols='50' name='text' required)
-				input(type='submit', name='Submit Post')
+				input(type='submit', value='Submit Post')

@@ -4,9 +4,14 @@ extend layout
 block content
 
 		- var selectedPost
-		- posts.forEach(function(elem){ if (elem['_id'].toString() === postId) {selectedPost = elem } }) 
+		- if (posts) { posts.forEach(function(elem){ if (elem['_id'].toString() === postId) {selectedPost = elem } }); } 
 
 		.col-sm-9.col-md-10
-			.panel.panel-primary
-				.panel-heading #{selectedPost.title} | Written by: #{selectedPost.author}
-				.panel-body #{selectedPost.text}
+			if selectedPost
+				.panel.panel-primary
+					.panel-heading #{selectedPost.title} | Written by: #{selectedPost.author}
+					.panel-body #{selectedPost.text}
+			else
+				.panel.panel-primary
+					.panel-heading Error loading posts
+						.panel-body Sorry! Try reloading the page

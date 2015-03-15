@@ -6,16 +6,21 @@ block content
 	.col-sm-9.col-md-10
 		h1 Lets Blog! 
 		a.btn.btn-info(href='/edit') Write/Edit post
-		- var n = 0
-		if posts.length >= 5
-			while n < 5
-				.panel.panel-primary
-					.panel-heading #{posts[n].title} | Written by: #{posts[n].author}
-					.panel-body #{posts[n].text}
-				- n++
+		if posts
+			- var n = 0
+			if posts.length >= 5
+				while n < 5
+					.panel.panel-primary
+						.panel-heading #{posts[n].title} | Written by: #{posts[n].author}
+						.panel-body #{posts[n].text}
+					- n++
+			else 
+				each post in posts
+					.panel.panel-primary
+						.panel-heading #{post.title} | Written by: #{post.author}
+						.panel-body #{post.text}
 		else 
-			each post in posts
-				.panel.panel-primary
-					.panel-heading #{post.title} | Written by: #{post.author}
-					.panel-body #{post.text}
+			.panel.panel-primary
+						.panel-heading Error loading posts
+						.panel-body Sorry! Try reloading the page
 

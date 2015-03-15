@@ -51,12 +51,58 @@ function newPost(POSTbody, callback) {
 
 // fetching all docs is a placeholder behaviour
 // TODO refactor to take a second parameter (e.g. 'page') and only bring back 10(?) results at a time
-function fetchPosts(callback) {
+function fetchAllPosts(callback) {
 	blogpost.find({}, function(err, docs){
-		console.log("fetchPosts: \n",docs);
+		// console.log("fetchAllPosts: \n",docs);
 		return callback(docs);
 	});
 }
+
+function fetchPost(id,callback) {
+	blogpost.findById( id, function(err, post) {
+		if (err) {
+			console.log(err);
+			return callback(err, null);
+		}
+		else {
+			console.log(post);
+			return callback(null, post);
+		}
+	});
+}
+
+function updatePost(id, PUTbody, callback) {
+	updateData = qs.parse(PUTbody);
+	console.log('Saving: ',updateData);
+	blogpost.findByIdAndUpdate( id, { $set: { 	author: updateData.author, 
+												title: updateData.title, 
+												text: updateData.text } }, 
+	function(err, post) {
+		if (err) {
+			console.log(err);
+			return callback(err, null);
+		}
+		else {
+			console.log('Saved data: ',post);
+			return callback(null, post);
+		}
+	});
+}
+
+// TODO add confirmations step for delete. extra edit view with confrim warning and button
+function deletePost(id, callback) {
+	blogpost.remove( { _id: id }, function(err){
+		if (err) {
+			console.log(err);
+			return callback(err, null);
+		}
+		else {
+			console.log('Post Deleted: ',id);
+			return callback(null, 'Post Succesfully Deleted');
+		}
+	});
+}
+
 
 function delTestPosts() {
 	blogpost.remove({title: 'test'}, function(err){
@@ -67,6 +113,9 @@ function delTestPosts() {
 
 module.exports = {
 	newPost : newPost,
-	fetchPosts: fetchPosts,
+	fetchAllPosts: fetchAllPosts,
+	fetchPost: fetchPost,
+	updatePost: updatePost,
+	deletePost: deletePost,
 	delTestPosts: delTestPosts
 };
